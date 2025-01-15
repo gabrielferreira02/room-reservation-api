@@ -24,6 +24,9 @@ public class TypeEntity {
     @NotBlank
     private String name;
 
+    @NotBlank
+    private String description;
+
     @NotNull
     @Min(value = 100)
     private double price;
