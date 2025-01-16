@@ -30,6 +30,17 @@ public class ReserveServiceImpl implements ReserveService {
     }
 
     @Override
+    public ReserveEntity findById(Long id) {
+        return reserveRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Id does not exists"));
+    }
+
+    @Override
+    public List<ReserveEntity> findReserveByUserId(Long id) {
+        return reserveRepository.findReserveByUserId(id);
+    }
+
+    @Override
     public ResponseEntity<ReserveEntity> createReserve(ReserveRequestDTO reserveDTO) {
         UserEntity user = userRepository.findById(reserveDTO.getUserId())
                 .orElseThrow(() -> new RuntimeException("User id does not exists"));

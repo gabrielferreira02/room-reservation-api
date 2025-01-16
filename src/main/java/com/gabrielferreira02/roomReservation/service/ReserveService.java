@@ -10,6 +10,8 @@ import java.util.List;
 
 public interface ReserveService {
     List<ReserveEntity> findAll();
+    ReserveEntity findById(Long id);
+    List<ReserveEntity> findReserveByUserId(Long id);
     ResponseEntity<ReserveEntity> createReserve(ReserveRequestDTO reserveDTO);
     ResponseEntity<ReserveEntity> updateReserve(ReserveRequestDTO reserveDTO, Long id);
     ResponseEntity<?> deleteReserve(Long id);

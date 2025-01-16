@@ -24,6 +24,16 @@ public class ReserveController {
         return reserveService.findAll();
     }
 
+    @GetMapping("{id}")
+    public ReserveEntity findById(@PathVariable Long id) {
+        return reserveService.findById(id);
+    }
+
+    @GetMapping("user/{id}")
+    public List<ReserveEntity> findReserveByUserId(@PathVariable Long id) {
+        return reserveService.findReserveByUserId(id);
+    }
+
     @PostMapping
     public ResponseEntity<ReserveEntity> createReserve(@Valid @RequestBody ReserveRequestDTO reserveDTO) {
         return reserveService.createReserve(reserveDTO);
