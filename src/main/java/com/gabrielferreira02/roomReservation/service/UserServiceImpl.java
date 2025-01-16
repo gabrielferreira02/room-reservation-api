@@ -4,7 +4,9 @@ import com.gabrielferreira02.roomReservation.dto.UserRequestDTO;
 import com.gabrielferreira02.roomReservation.entity.Role;
 import com.gabrielferreira02.roomReservation.entity.UserEntity;
 import com.gabrielferreira02.roomReservation.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -15,9 +17,11 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -28,8 +32,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<UserEntity> createUser(UserRequestDTO userDTO) {
         UserEntity user = new UserEntity();
-        user.setName(userDTO.getName());
-        user.setPassword(userDTO.getPassword());
+        user.setUsername(userDTO.getName());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setCpf(userDTO.getCpf());
         user.setRoles(new HashSet<>(Set.of(Role.USER)));
 
@@ -41,8 +45,8 @@ public class UserServiceImpl implements UserService {
         UserEntity user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Id does not exists"));
 
-        user.setPassword(userDTO.getPassword());
-        user.setName(userDTO.getName());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        user.setUsername(userDTO.getName());
         user.setCpf(userDTO.getCpf());
 
         return ResponseEntity.ok(userRepository.save(user));

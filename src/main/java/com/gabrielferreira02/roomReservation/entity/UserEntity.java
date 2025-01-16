@@ -24,7 +24,7 @@ public class UserEntity {
     private Long id;
 
     @NotBlank(message = "O nome não pode estar em branco.")
-    private String name;
+    private String username;
 
     @CPF(message = "CPF inválido.")
     @Column(unique = true)
@@ -34,7 +34,7 @@ public class UserEntity {
     private String password;
 
 
-    @ElementCollection(targetClass = Role.class)
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;

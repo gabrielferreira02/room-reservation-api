@@ -5,6 +5,7 @@ import com.gabrielferreira02.roomReservation.entity.ReserveEntity;
 import com.gabrielferreira02.roomReservation.service.ReserveServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,31 +20,37 @@ public class ReserveController {
         this.reserveService = reserveService;
     }
 
+    @PreAuthorize("permitAll()")
     @GetMapping
     public List<ReserveEntity> findAll() {
         return reserveService.findAll();
     }
 
+    @PreAuthorize("hasRoles('ADMIN', 'USER')")
     @GetMapping("{id}")
     public ReserveEntity findById(@PathVariable Long id) {
         return reserveService.findById(id);
     }
 
+    @PreAuthorize("hasRoles('ADMIN', 'USER')")
     @GetMapping("user/{id}")
     public List<ReserveEntity> findReserveByUserId(@PathVariable Long id) {
         return reserveService.findReserveByUserId(id);
     }
 
+    @PreAuthorize("hasRoles('ADMIN', 'USER')")
     @PostMapping
     public ResponseEntity<ReserveEntity> createReserve(@Valid @RequestBody ReserveRequestDTO reserveDTO) {
         return reserveService.createReserve(reserveDTO);
     }
 
+    @PreAuthorize("hasRoles('ADMIN', 'USER')")
     @PutMapping("{id}")
     public ResponseEntity<ReserveEntity> updateReserve(@Valid @RequestBody ReserveRequestDTO reserveDTO,@PathVariable Long id) {
         return reserveService.updateReserve(reserveDTO, id);
     }
 
+    @PreAuthorize("hasRoles('ADMIN', 'USER')")
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteReserve(@PathVariable Long id) {
         return reserveService.deleteReserve(id);
