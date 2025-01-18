@@ -36,7 +36,7 @@ public class UserController {
         return userService.updateUser(userDTO, id);
     }
 
-    @PreAuthorize("hasRoles('USER','ADMIN')")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         return userService.deleteUser(id);
