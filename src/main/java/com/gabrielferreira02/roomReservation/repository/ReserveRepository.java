@@ -11,4 +11,6 @@ import java.util.List;
 public interface ReserveRepository extends JpaRepository<ReserveEntity, Long> {
     @Query("SELECT r FROM ReserveEntity r WHERE r.user.id = :userId")
     List<ReserveEntity> findReserveByUserId(Long userId);
+    @Query("SELECT r FROM ReserveEntity r WHERE r.room.id = :roomId")
+    List<ReserveEntity> findByRoomId(Long roomId);
 }

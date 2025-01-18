@@ -45,7 +45,9 @@ public class ReserveServiceImpl implements ReserveService {
         UserEntity user = userRepository.findById(reserveDTO.getUserId())
                 .orElseThrow(() -> new RuntimeException("User id does not exists"));
 
-        if(roomRepository.existsById(reserveDTO.getRoomId())) {
+        List<ReserveEntity> r = reserveRepository.findByRoomId(reserveDTO.getRoomId());
+
+        if(!r.isEmpty()) {
             throw new RuntimeException("The room is already reserved");
         }
 

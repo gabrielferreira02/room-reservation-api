@@ -199,6 +199,23 @@ class ReserveServiceImplTest {
     }
 
     @Test
+    @DisplayName("It should fail on create a reserve due to an existent reserve with roomId")
+    void createReserveErrorCase4() {
+        ReserveRequestDTO request = new ReserveRequestDTO(
+                1L,
+                1L,
+                1
+        );
+
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
+        when(reserveRepository.findByRoomId(anyLong())).thenReturn(List.of(new ReserveEntity()));
+
+        assertThrows(RuntimeException.class, () -> {
+            reserveService.createReserve(request);
+        });
+    }
+
+    @Test
     @DisplayName("It should fail on create a reserve due to days is less than 1")
     void updateReserveErrorCase1() {
         ReserveRequestDTO request = new ReserveRequestDTO(
