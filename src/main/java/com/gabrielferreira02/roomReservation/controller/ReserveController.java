@@ -26,31 +26,31 @@ public class ReserveController {
         return reserveService.findAll();
     }
 
-    @PreAuthorize("hasRoles('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("{id}")
     public ReserveEntity findById(@PathVariable Long id) {
         return reserveService.findById(id);
     }
 
-    @PreAuthorize("hasRoles('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("user/{id}")
     public List<ReserveEntity> findReserveByUserId(@PathVariable Long id) {
         return reserveService.findReserveByUserId(id);
     }
 
-    @PreAuthorize("hasRoles('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PostMapping
     public ResponseEntity<ReserveEntity> createReserve(@Valid @RequestBody ReserveRequestDTO reserveDTO) {
         return reserveService.createReserve(reserveDTO);
     }
 
-    @PreAuthorize("hasRoles('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @PutMapping("{id}")
     public ResponseEntity<ReserveEntity> updateReserve(@Valid @RequestBody ReserveRequestDTO reserveDTO,@PathVariable Long id) {
         return reserveService.updateReserve(reserveDTO, id);
     }
 
-    @PreAuthorize("hasRoles('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteReserve(@PathVariable Long id) {
         return reserveService.deleteReserve(id);
